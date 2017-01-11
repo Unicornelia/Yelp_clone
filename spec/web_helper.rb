@@ -17,5 +17,12 @@ module WebHelpers
     click_button 'Log in'
   end
 
+  def create_restaurant
+    visit '/'
+    click_link 'Add a restaurant'
+    fill_in 'restaurant[name]', with: 'KFC'
+    fill_in 'restaurant[description]', with: 'Deep fried goodness'
+    click_button 'Create Restaurant'
+  end
 
 end

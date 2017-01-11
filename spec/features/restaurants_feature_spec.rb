@@ -56,9 +56,9 @@ RSpec.feature 'restaurants', :type => :feature  do
 
   context 'editing restaurants' do
 
-    before { Restaurant.create name: 'KFC', description: 'Deep fried goodness', id: 1 }
     scenario 'let user edit a restaurant' do
       sign_up
+      create_restaurant
       click_link 'Edit KFC'
       fill_in 'Name', with: 'Kentucky Fried Chicken'
       fill_in 'Description', with: 'Deep fried goodness'
@@ -66,16 +66,14 @@ RSpec.feature 'restaurants', :type => :feature  do
       click_link 'Kentucky Fried Chicken'
       expect(page).to have_content 'Kentucky Fried Chicken'
       expect(page).to have_content 'Deep fried goodness'
-      expect(current_path).to eq '/restaurants/1'
     end
   end
 
   context 'deleting restaurants' do
 
-    before { Restaurant.create name: 'KFC', description: 'Deep fried goodness' }
-
     scenario 'removes the restaurant when a user clicks a delete link' do
       sign_up
+      create_restaurant
       click_link 'Delete KFC'
       expect(page).not_to have_content 'KFC'
       expect(page).to have_content 'Restaurant deleted successfully'
