@@ -25,4 +25,17 @@ module WebHelpers
     click_button 'Create Restaurant'
   end
 
+  def create_another_restaurant
+    visit '/'
+    click_link 'Add a restaurant'
+    fill_in 'restaurant[name]', with: "Moe's Tavern"
+    fill_in 'restaurant[description]', with: 'Cosy place'
+    click_button 'Create Restaurant'
+  end
+
+  def sign_out
+    visit '/'
+    click_link "Sign out"
+  end
+
 end

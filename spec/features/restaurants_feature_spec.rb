@@ -38,25 +38,31 @@ RSpec.feature 'Restaurants', :type => :feature  do
       expect(page).to have_content 'KFC'
       expect(current_path).to eq '/restaurants'
     end
+
+    scenario 'is not valid unless it has a unique name' do
+      sign_up
+      create_another_restaurant
+      restaurant = Restaurant.new(name: "Moe's Tavern")
+      expect(restaurant).to have(1).error_on(:name)
+    end
   end
 
   context 'viewing restaurants' do
 
     before do
       sign_up
+      create_restaurant
     end
-    let!(:kfc){Restaurant.create(name:'KFC', description: 'Deep fried goodness') }
 
     scenario 'lets a user view a restaurant' do
       visit '/restaurants'
       click_link 'KFC'
       expect(page).to have_content 'KFC'
-      expect(current_path).to eq "/restaurants/#{kfc.id}"
+      expect(page).to have_content 'Deep fried goodness'
     end
   end
 
   context 'editing restaurants' do
-
     scenario 'let user edit a restaurant' do
       sign_up
       create_restaurant
@@ -71,7 +77,6 @@ RSpec.feature 'Restaurants', :type => :feature  do
   end
 
   context 'deleting restaurants' do
-
     scenario 'removes the restaurant when a user clicks a delete link' do
       sign_up
       create_restaurant
