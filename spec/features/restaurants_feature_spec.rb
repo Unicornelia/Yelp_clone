@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'restaurants', :type => :feature  do
+RSpec.feature 'Restaurants', :type => :feature  do
 
   include WebHelpers
 
@@ -13,11 +13,10 @@ RSpec.feature 'restaurants', :type => :feature  do
   end
 
   context 'restaurants have been added' do
-    before do
-      Restaurant.create(name: 'KFC')
-    end
-
     scenario 'display restaurants' do
+      sign_up
+      create_restaurant
+      click_link 'Sign out'
       visit '/restaurants'
       expect(page).to have_content('KFC')
       expect(page).not_to have_content('No restaurants yet')
@@ -25,7 +24,6 @@ RSpec.feature 'restaurants', :type => :feature  do
   end
 
   context 'creating restaurants' do
-
     scenario 'user can\'t add a restaurant without signing up' do
       visit '/restaurants'
       click_link 'Add a restaurant'
@@ -44,7 +42,10 @@ RSpec.feature 'restaurants', :type => :feature  do
 
   context 'viewing restaurants' do
 
-    let!(:kfc){Restaurant.create(name:'KFC') }
+    before do
+      sign_up
+    end
+    let!(:kfc){Restaurant.create(name:'KFC', description: 'Deep fried goodness') }
 
     scenario 'lets a user view a restaurant' do
       visit '/restaurants'
