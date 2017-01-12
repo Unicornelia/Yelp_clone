@@ -34,7 +34,6 @@ module WebHelpers
   end
 
   def sign_out
-    visit '/'
     click_link "Sign out"
   end
 
