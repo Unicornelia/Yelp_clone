@@ -33,6 +33,13 @@ module WebHelpers
     click_button 'Create Restaurant'
   end
 
+  def review_restaurant
+    click_link 'Review KFC'
+    fill_in "Thoughts", with: "so so"
+    select '3', from: 'Rating'
+    click_button 'Leave Review'
+  end
+
   def sign_out
     click_link "Sign out"
   end

@@ -26,6 +26,17 @@ class ReviewsController < ApplicationController
     end
   end
 
+  def destroy
+    @review = Review.find(params[:id])
+    unless @review.belongs_to?(current_user)
+      flash[:notice] = 'Review can only be deleted by owner'
+      redirect_to '/restaurants'
+    end
+    @review.destroy
+    flash[:notice] = 'Review deleted successfully'
+    redirect_to 'restaurants'
+  end
+
   private
 
   def review_params

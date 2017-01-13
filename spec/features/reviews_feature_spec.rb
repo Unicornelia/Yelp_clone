@@ -8,10 +8,7 @@ RSpec.feature 'reviewing', :type => :feature  do
   scenario 'allows users to leave a review using a form' do
     sign_up(user1)
     create_restaurant
-    click_link 'Review KFC'
-    fill_in "Thoughts", with: "so so"
-    select '3', from: 'Rating'
-    click_button 'Leave Review'
+    review_restaurant
     expect(current_path).to eq "/restaurants"
     click_link 'KFC'
     expect(page).to have_content('so so')
@@ -29,10 +26,20 @@ RSpec.feature 'reviewing', :type => :feature  do
     scenario 'user can delete their own review' do
       sign_up(user1)
       create_restaurant
-
+      review_restaurant
+      click_link 'KFC'
+      click_link 'Delete review'
+      expect(page).not_to have_content 'so so'
     end
 
     scenario 'user can not delete other user\'s reviews' do
+      sign_up(user1)
+      create_restaurant
+      review_restaurant
+      sign_out
+      sign_up(user2)
+      click_link 'KFC'
+      expect(page).not_to have_content 'Delete review'
     end
   end
 

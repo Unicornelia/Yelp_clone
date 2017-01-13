@@ -36,6 +36,7 @@ gem 'devise'
 gem 'envyable'
 gem 'omniauth-facebook'
 gem 'shoulda'
+gem 'pry'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
