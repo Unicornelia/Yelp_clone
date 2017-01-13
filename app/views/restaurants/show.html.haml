@@ -7,6 +7,6 @@
     %p= review.thoughts
     %p= review.rating
     - if review.belongs_to?(current_user)
-      %p= link_to "Delete review", restaurant_review_path(@restaurant.id, review.id), method: :delete
+      %p= link_to "Delete review", restaurant_review_path(id: review.id, restaurant_id: @restaurant.id), method: :delete
 - else
   %h1 No reviews yet

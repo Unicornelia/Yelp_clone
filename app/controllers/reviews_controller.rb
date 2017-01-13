@@ -34,7 +34,7 @@ class ReviewsController < ApplicationController
     end
     @review.destroy
     flash[:notice] = 'Review deleted successfully'
-    redirect_to 'restaurants'
+    redirect_to '/restaurants'
   end
 
   private
