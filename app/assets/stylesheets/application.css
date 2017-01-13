@@ -48,6 +48,13 @@ input[type=text] {
   background-color: #ffffe5;
 }
 
+.input-area {
+  padding: 5px;
+  margin: 5px;
+  border-radius: 5px;
+  background-color: #ffffe5;
+}
+
 
 label {
   color: #66b2ff;
