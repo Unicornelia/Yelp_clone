@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.feature 'Restaurants', :type => :feature  do
-
   include WebHelpers
+  user1 = {email: 'test@email.com', password: 'notpassword'}
 
   context 'no restaurants have been added' do
     scenario 'should display a prompt to add a restaurant' do
@@ -14,7 +14,7 @@ RSpec.feature 'Restaurants', :type => :feature  do
 
   context 'restaurants have been added' do
     scenario 'display restaurants' do
-      sign_up
+      sign_up(user1)
       create_restaurant
       click_link 'Sign out'
       visit '/restaurants'
@@ -31,7 +31,7 @@ RSpec.feature 'Restaurants', :type => :feature  do
     end
 
     scenario 'prompts user to fill out a form, then displays the new restaurant' do
-      sign_up
+      sign_up(user1)
       click_link 'Add a restaurant'
       fill_in 'Name', with: 'KFC'
       click_button 'Create Restaurant'
@@ -40,7 +40,7 @@ RSpec.feature 'Restaurants', :type => :feature  do
     end
 
     scenario 'is not valid unless it has a unique name' do
-      sign_up
+      sign_up(user1)
       create_another_restaurant
       restaurant = Restaurant.new(name: "Moe's Tavern")
       expect(restaurant).to have(1).error_on(:name)
@@ -50,7 +50,7 @@ RSpec.feature 'Restaurants', :type => :feature  do
   context 'viewing restaurants' do
 
     before do
-      sign_up
+      sign_up(user1)
       create_restaurant
     end
 
@@ -64,7 +64,7 @@ RSpec.feature 'Restaurants', :type => :feature  do
 
   context 'editing restaurants' do
     scenario 'let user edit a restaurant' do
-      sign_up
+      sign_up(user1)
       create_restaurant
       click_link 'Edit KFC'
       fill_in 'Name', with: 'Kentucky Fried Chicken'
@@ -78,7 +78,7 @@ RSpec.feature 'Restaurants', :type => :feature  do
 
   context 'deleting restaurants' do
     scenario 'removes the restaurant when a user clicks a delete link' do
-      sign_up
+      sign_up(user1)
       create_restaurant
       click_link 'Delete KFC'
       expect(page).not_to have_content 'KFC'
@@ -88,7 +88,7 @@ RSpec.feature 'Restaurants', :type => :feature  do
 
   context 'an invalid restaurant' do
     scenario 'does not let you submit a name that is too short' do
-      sign_up
+      sign_up(user1)
       click_link 'Add a restaurant'
       fill_in 'Name', with: 'kf'
       click_button 'Create Restaurant'
