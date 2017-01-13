@@ -33,10 +33,10 @@ module WebHelpers
     click_button 'Create Restaurant'
   end
 
-  def review_restaurant
+  def review_restaurant(review)
     click_link 'Review KFC'
-    fill_in "Thoughts", with: "so so"
-    select '3', from: 'Rating'
+    fill_in "Thoughts", with: review[:thoughts]
+    select review[:rating], from: 'Rating'
     click_button 'Leave Review'
   end
 

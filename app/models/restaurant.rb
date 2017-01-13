@@ -7,4 +7,10 @@ class Restaurant < ApplicationRecord
   def belongs_to_user?(user)
     self.user == user
   end
+
+  def average_rating
+    return "N/A" if reviews.none?
+    reviews.inject(0) { |memo, review| memo + review.rating } / reviews.length
+  end
+
 end
