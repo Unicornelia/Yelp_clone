@@ -33,10 +33,18 @@ before_action :authenticate_user!, :except => [:index, :show]
 
   def edit
     @restaurant = Restaurant.find(params[:id])
+    unless @restaurant.belongs_to_user?(current_user)
+      flash[:notice] = 'Restaurant can only be updated by owner'
+      redirect_to '/restaurants'
+    end
   end
 
   def destroy
     @restaurant = Restaurant.find(params[:id])
+    unless @restaurant.user == current_user
+      flash[:notice] = 'Restaurant can only be deleted by owner'
+      redirect_to '/restaurants'
+    end
     @restaurant.destroy
     flash[:notice] = 'Restaurant deleted successfully'
     redirect_to '/restaurants'
