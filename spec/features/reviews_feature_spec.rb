@@ -53,7 +53,7 @@ RSpec.feature 'reviewing', :type => :feature  do
       sign_out
       sign_up(user2)
       review_restaurant(review2)
-      expect(page).to have_content("Average Rating: 2")
+      expect(page).to have_content("Average Rating: ★★☆☆☆")
     end
   end
 

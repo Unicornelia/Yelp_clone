@@ -2,7 +2,7 @@
 - if @restaurants.any?
   - @restaurants.each do |restaurant|
     %p= link_to restaurant.name, restaurant_path(restaurant)
-    %p= "Average Rating: " + restaurant.average_rating.to_s
+    %p Average Rating: #{star_rating(restaurant.average_rating)}
     %p= link_to "Review #{restaurant.name}", new_restaurant_review_path(restaurant)
     - if @user
       - if @user.restaurants.include?(restaurant)
